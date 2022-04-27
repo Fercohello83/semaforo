@@ -1,32 +1,69 @@
 
 <html>
-    <a href="https://www.google.com/search?q=semaforos&sxsrf=AOaemvIzx3OsAoiuMWtLJDKVHAueS-OZ5Q:1638389039779&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjNuODlssP0AhXgppUCHQQwCVUQ_AUoAXoECAEQAw&biw=1366&bih=625&dpr=1">
-        <div>class="bolita-roja"></div>
+    <a href="https://www.google.com/search?q=semaforos&sxsrf=AOaemvIzx3OsAoiuMWtLJDKVHAueS-OZ5Q:1638389039779&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjNuODlssP0AhXgppUCHQQwCVUQ_AUoAXoECAEQAw&biw=1366&bih=625&dpr=1"></a>
     <div>
         <div class="cont-semaforo">
-        <div class="luz bolita-roja"></div>
-        <div class="luz bolita-amarilla"></div>
-        <div class="luz bolita-verde"></div>
-        
-            
-    
+            <div class="luz bolita-roja"></div>
+            <div class="luz bolita-amarilla"></div>
+            <div class="luz bolita-verde"></div>
         </div>
-    
-    
     </div>
 </html>
-    
+
+
+<!--
+
+    Fijate que agregue el filter brightness al 50% en las tres clases de luces 
+    y la clase prendida sube ese brightness al maximo
+
+-->
 
 <script>
 
-    let time = 3
+    //Creo una variable donde guardo el tiempo que dura prendida cada luz
+    let time = 3000
+    
+    //Creo una variable donde guardo el indice que voy a usar para buscar entre mis luces
+    let index = 0
 
+    //Creo una variable donde guardo una lista con los elementos que tienen la clase luz
     luces = document.getElementsByClassName('luz')
 
-    for(l =  0; l < luces.length; l++){
+    //Creo un intervalo (funcion de JS) para que ejecute mi funcion controladorSemaforo cada 3 segundos
+    setInterval(controladorSemaforo, time);
 
+    //Creo la funcion que va a llamar el intervalo anterior
+    function controladorSemaforo(){
+
+        //Hago un bucle sobre mi lista de luces
+        for(var i = 0; i <= (luces.length - 1); i++){
+
+            //Si la luz tiene la clase prendida ejecuta el codigo dentro del IF
+            if(luces[i].classList.contains('prendida')){
+                
+                //Borra la clase prendida de la luz que la posee
+                luces[i].classList.remove('prendida')
+            }
+
+        }
+
+        //Agrega la clase prendida a la luz que corresponde segun el indice
+        luces[index].classList.add('prendida')
         
+        //Evalua si la variable index es menor al largo de mi variable que contiene las luces
+        if(index < (luces.length - 1)){
+
+            //Si index es menor, le suma uno
+            index++
+        }
+        else{
+
+            //Si index es igual al largo de la variable que contiene las luces, 
+            //setea la variable index a 0 para volver a empezar
+            index = 0
+        }
     }
+
 </script>
 
 <style>
@@ -44,7 +81,8 @@
         height: 180;
         width: 180;
         background-color: red;
-        border-radius: 50%;
+        filter: brightness(50%);
+        border-radius: 100%;
         margin-bottom: 10px;
         margin-top: 10;
         margin-left: 10px;
@@ -60,7 +98,8 @@
         height: 180;
         width: 180;
         background-color: yellow;
-        border-radius: 50%;
+        filter: brightness(50%);
+        border-radius: 100%;
         margin-bottom: 10px;
         margin-left: 10px;
         margin-right: 20px;
@@ -75,12 +114,15 @@
         height: 180;
         width: 180;
         background-color: green;
-        border-radius: 50%;
+        filter: brightness(50%);
+        border-radius: 100%;
         margin-left: 10px;
         margin-right: 20px;
         margin-top: 10;
         border: solid 2px white
     }
-    
-    
+
+    .prendida{
+        filter: brightness(100%);
+    }
 </style>
